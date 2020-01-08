@@ -13,22 +13,33 @@ import RxCocoa
 class CurrencyListViewModel: BaseViewModel {
     private let defaultCurrency = Currency(symbol: "USD")
     
-    let baseCurrency = PublishRelay<Currency>()
+    let baseCurrency: BehaviorRelay<Currency>
+    let refresh: AnyObserver<Void>
+    
+    private let disposeBag = DisposeBag()
     
     lazy var currencyList: Driver<[CurrencyRateViewModel]> = {
-        return baseCurrency.flatMapLatest { currency in
+        return baseCurrency.flatMapLatest { [unowned self] currency in
             return self.loadingBound(GetCurrencyRates(baseCurrency: currency)
                 .execute()
                 .map { ratesList in
                     ratesList.map { CurrencyRateViewModel(rate: $0) }
                 })
-                
         }
         .asDriver(onErrorJustReturn: []) //TODO: Handle the error here
     }()
     
-    override func didBind() {
-        super.didBind()
-        baseCurrency.accept(defaultCurrency)
+    override init() {
+        baseCurrency = BehaviorRelay(value: defaultCurrency)
+        
+        let refreshPs = PublishSubject<Void>()
+        refresh = refreshPs.asObserver()
+        
+        super.init()
+        
+        refreshPs.subscribe(onNext: { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.baseCurrency.accept(weakSelf.baseCurrency.value)
+        }).disposed(by: disposeBag)
     }
 }
