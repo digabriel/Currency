@@ -42,4 +42,10 @@ class CurrencyListViewModel: BaseViewModel {
             weakSelf.baseCurrency.accept(weakSelf.baseCurrency.value)
         }).disposed(by: disposeBag)
     }
+    
+    func buildConverterViewModel(rateViewModel: CurrencyRateViewModel) -> CurrencyConverterViewModel{
+        return CurrencyConverterViewModel(fromCurrency: baseCurrency.value,
+                                          toCurrency: rateViewModel.currency,
+                                          rateValue: rateViewModel.rateValue)
+    }
 }

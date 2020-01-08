@@ -7,12 +7,14 @@ PODS:
   - RxRelay (5.0.1):
     - RxSwift (~> 5)
   - RxSwift (5.0.1)
+  - StringMasking (0.1.3)
 
 DEPENDENCIES:
   - Alamofire (= 5.0.0-rc.3)
   - Resolver (= 1.1.2)
   - RxCocoa (= 5.0.1)
   - RxSwift (= 5.0.1)
+  - StringMasking (from `https://github.com/digabriel/StringMasking.git`)
 
 SPEC REPOS:
   trunk:
@@ -22,13 +24,23 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
 
+EXTERNAL SOURCES:
+  StringMasking:
+    :git: https://github.com/digabriel/StringMasking.git
+
+CHECKOUT OPTIONS:
+  StringMasking:
+    :commit: 6bc26fb727f0c86e364e5b55e7be304b455bdd54
+    :git: https://github.com/digabriel/StringMasking.git
+
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
   Resolver: e04ca5a9a19906f2e5cdceb2b90edd3b5daed049
   RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
   RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  StringMasking: 7a02336e2f13ecfa00f0fca43bd40f76ce4dd252
 
-PODFILE CHECKSUM: 5ac03507505296193756525302a2ea81bf24ec0b
+PODFILE CHECKSUM: a7a6ff762f02b98666a6b236173a6101074b9352
 
 COCOAPODS: 1.8.4

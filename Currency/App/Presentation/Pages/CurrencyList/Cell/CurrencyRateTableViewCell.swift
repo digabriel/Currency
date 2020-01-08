@@ -17,7 +17,7 @@ class CurrencyRateTableViewCell: UITableViewCell {
     
     func bindViewModel(_ viewModel: CurrencyRateViewModel) {
         currencyLabel.text = viewModel.symbol
-        rateLabel.text = viewModel.rateValue
+        rateLabel.text = viewModel.formattedRateValue
         iconImageView.image = UIImage(named: viewModel.flagImageName)
     }
 }

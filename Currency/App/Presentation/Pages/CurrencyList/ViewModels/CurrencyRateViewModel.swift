@@ -15,12 +15,20 @@ struct CurrencyRateViewModel {
         self.rate = rate
     }
     
-    var symbol: String {
-        return rate.currency.symbol
+    var currency: Currency {
+        return rate.currency
     }
     
-    var rateValue: String {
+    var symbol: String {
+        return rate.currency.symbol.uppercased()
+    }
+    
+    var formattedRateValue: String {
         return String(format: "%.2f", rate.rate)
+    }
+    
+    var rateValue: Double {
+        return rate.rate
     }
     
     var flagImageName: String {

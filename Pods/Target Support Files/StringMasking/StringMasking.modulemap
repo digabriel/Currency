@@ -1,0 +1,6 @@
+framework module StringMasking {
+  umbrella header "StringMasking-umbrella.h"
+
+  export *
+  module * { export * }
+}

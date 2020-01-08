@@ -29,6 +29,14 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
         super.init(coder: coder)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let row = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: row, animated: true)
+        }
+    }
+    
     override func bindViewModel() {
         viewModel.loading
             .bind(to: pullToRefreshView.rx.isRefreshing)
@@ -36,6 +44,13 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
         
         pullToRefreshView.rx.controlEvent(.valueChanged)
             .bind(to: viewModel.refresh)
+            .disposed(by: disposeBag)
+        
+        tableView.rx
+            .modelSelected(CurrencyRateViewModel.self)
+            .subscribe(onNext: { [weak self] rateVM in
+                self?.navigateToConverter(rateVM: rateVM)
+            })
             .disposed(by: disposeBag)
         
         viewModel.currencyList
@@ -47,5 +62,11 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
         .disposed(by: disposeBag)
         
         super.bindViewModel()
+    }
+    
+    private func navigateToConverter(rateVM: CurrencyRateViewModel) {
+        let converterViewModel = viewModel.buildConverterViewModel(rateViewModel: rateVM)
+        let vc = CurrencyConverterViewController(viewModel: converterViewModel)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
