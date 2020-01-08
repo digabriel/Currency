@@ -12,7 +12,13 @@ import RxSwift
 
 class CurrencyRepositoryRemote: CurrencyRepository {
     func fetchCurrencyRates(baseCurrency: Currency) -> Single<[CurrencyRate]> {
-        return Single.just([])
+        let request = GetLatestRatesRequest(accessKey: FixerDataSource.accessKey,
+                                            baseCurrencySymbol: baseCurrency.symbol)
+        
+        return FixerDataSource.getLatestRates(request: request)
+            .rxSingleData
+            .mapObject(type: GetLatestRatesResponse.self)
+            .map { CurrencyRate.fromLatestRatesResponse($0) }
     }
     
     func convertAmount(from fCurrency: Currency, to tCurrency: Currency, amount: Double) -> Single<CurrencyRate> {

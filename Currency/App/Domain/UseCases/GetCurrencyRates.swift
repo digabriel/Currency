@@ -10,8 +10,12 @@ import Foundation
 import RxSwift
 import Resolver
 
-struct GetCurrencyRates {
+class GetCurrencyRates {
     private let baseCurrency: Currency
+    
+    init(baseCurrency: Currency) {
+        self.baseCurrency = baseCurrency
+    }
     
     @Injected private var currencyRepository: CurrencyRepository
     

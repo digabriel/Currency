@@ -16,4 +16,15 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    override func bindViewModel() {
+        super.bindViewModel()
+        
+        viewModel.currencyList.asObservable().subscribe(onNext: { list in
+            print(list)
+        })
+        .disposed(by: disposeBag)
+        
+        viewModel.setup()
+    }
 }

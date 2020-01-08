@@ -10,5 +10,6 @@ import Foundation
 
 enum CurrencyError: Error {
     case validation(message: String)
+    case dataSources(baseError: Error)
     case unknown
 }

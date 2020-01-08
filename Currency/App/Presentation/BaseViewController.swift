@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class BaseViewController<VM>: UIViewController where VM: BaseViewModel {
     let viewModel: VM!
+    var disposeBag = DisposeBag()
     
     init(viewModel: VM) {
         self.viewModel = viewModel
@@ -19,4 +21,12 @@ class BaseViewController<VM>: UIViewController where VM: BaseViewModel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bindViewModel()
+    }
+    
+    func bindViewModel() {}
 }
