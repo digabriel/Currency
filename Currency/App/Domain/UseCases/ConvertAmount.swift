@@ -8,14 +8,18 @@
 
 import Foundation
 import RxSwift
+import Resolver
 
 struct ConvertAmount {
     private let fromCurrency: Currency
     private let toCurrency: Currency
     private let amount: Double
     
+    @Injected private var currencyRepository: CurrencyRepository
+    
     func execute() -> Single<CurrencyRate> {
-        return validate().andThen(Single.just(CurrencyRate(currency: Currency(symbol: "USD"), rate: 1.0)))
+        let repositoryCall = currencyRepository.convertAmount(from: fromCurrency, to: toCurrency, amount: amount)
+        return validate().andThen(repositoryCall)
     }
     
     private func validate() -> Completable {

@@ -8,11 +8,14 @@
 
 import Foundation
 import RxSwift
+import Resolver
 
 struct GetCurrencyRates {
     private let baseCurrency: Currency
     
+    @Injected private var currencyRepository: CurrencyRepository
+    
     func execute() -> Single<[CurrencyRate]> {
-        return Single.just([])
+        return currencyRepository.fetchCurrencyRates(baseCurrency: baseCurrency)
     }
 }
