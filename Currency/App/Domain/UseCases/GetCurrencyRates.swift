@@ -21,5 +21,6 @@ class GetCurrencyRates {
     
     func execute() -> Single<[CurrencyRate]> {
         return currencyRepository.fetchCurrencyRates(baseCurrency: baseCurrency)
+            .map { $0.sorted() }
     }
 }

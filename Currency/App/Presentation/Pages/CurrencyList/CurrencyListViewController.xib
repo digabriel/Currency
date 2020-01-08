@@ -8,8 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CurrencyListViewController" customModule="CurrencyConverter" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CurrencyListViewController" customModule="Currency" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="kck-bK-kuj" id="gpN-oy-hNB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,17 +19,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kcp-cY-TOa">
-                    <rect key="frame" x="186" y="438" width="42" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kck-bK-kuj">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Kcp-cY-TOa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9Xr-9y-Mau"/>
-                <constraint firstItem="Kcp-cY-TOa" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="nhN-0w-2uB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="kck-bK-kuj" secondAttribute="bottom" id="dg3-ir-OfF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kck-bK-kuj" secondAttribute="trailing" id="p7k-cG-1WW"/>
+                <constraint firstItem="kck-bK-kuj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="spZ-zK-PLE"/>
+                <constraint firstItem="kck-bK-kuj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uPs-Hx-wza"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="-462" y="-34"/>

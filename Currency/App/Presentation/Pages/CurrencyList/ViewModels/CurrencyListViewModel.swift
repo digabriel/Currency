@@ -14,18 +14,21 @@ class CurrencyListViewModel: BaseViewModel {
     private let defaultCurrency = Currency(symbol: "USD")
     
     let baseCurrency = PublishRelay<Currency>()
-    let currencyList: Driver<[CurrencyRate]>
-
-    override init() {
-        currencyList = baseCurrency.flatMapLatest { currency in
-            return GetCurrencyRates(baseCurrency: currency).execute()
+    
+    lazy var currencyList: Driver<[CurrencyRateViewModel]> = {
+        return baseCurrency.flatMapLatest { currency in
+            return self.loadingBound(GetCurrencyRates(baseCurrency: currency)
+                .execute()
+                .map { ratesList in
+                    ratesList.map { CurrencyRateViewModel(rate: $0) }
+                })
+                
         }
         .asDriver(onErrorJustReturn: []) //TODO: Handle the error here
-        
-        super.init()
-    }
+    }()
     
-    func setup() {
+    override func didBind() {
+        super.didBind()
         baseCurrency.accept(defaultCurrency)
     }
 }

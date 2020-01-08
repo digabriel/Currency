@@ -19,3 +19,13 @@ struct Currency {
         self.imageUrl = imageUrl
     }
 }
+
+extension Currency: Comparable {
+    static func < (lhs: Currency, rhs: Currency) -> Bool {
+        return lhs.symbol < rhs.symbol
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.symbol == rhs.symbol
+    }
+}

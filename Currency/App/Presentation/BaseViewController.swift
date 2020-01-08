@@ -11,7 +11,7 @@ import RxSwift
 
 class BaseViewController<VM>: UIViewController where VM: BaseViewModel {
     let viewModel: VM!
-    var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     init(viewModel: VM) {
         self.viewModel = viewModel
@@ -28,5 +28,7 @@ class BaseViewController<VM>: UIViewController where VM: BaseViewModel {
         bindViewModel()
     }
     
-    func bindViewModel() {}
+    func bindViewModel() {
+        viewModel.didBind()
+    }
 }

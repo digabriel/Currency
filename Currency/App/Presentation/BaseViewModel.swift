@@ -7,8 +7,19 @@
 //
 
 import Foundation
+import RxSwift
 
 // Classes that all view models will inherit. This can containt shared infos and logic used by all View Models
 class BaseViewModel {
+    let loading = PublishSubject<Bool>()
     
+    func loadingBound<T>(_ single: Single<T>) -> Single<T> {
+        return single.do(onSuccess: {[weak self]_ in self?.loading.onNext(false)},
+                         onError: {[weak self]_ in self?.loading.onNext(false) },
+                         onSubscribe: {[weak self] in self?.loading.onNext(true)})
+    }
+    
+    func didBind() {
+        
+    }
 }

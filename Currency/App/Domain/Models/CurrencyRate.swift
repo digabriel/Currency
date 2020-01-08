@@ -12,3 +12,9 @@ struct CurrencyRate {
     let currency: Currency
     let rate: Double
 }
+
+extension CurrencyRate: Comparable {
+    static func < (lhs: CurrencyRate, rhs: CurrencyRate) -> Bool {
+        return lhs.currency < rhs.currency
+    }
+}
