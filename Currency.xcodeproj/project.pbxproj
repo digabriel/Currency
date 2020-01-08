@@ -40,6 +40,7 @@
 		13B8C16323C64563006FB383 /* CurrencyRateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8C16123C64563006FB383 /* CurrencyRateTableViewCell.swift */; };
 		13B8C16423C64563006FB383 /* CurrencyRateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B8C16223C64563006FB383 /* CurrencyRateTableViewCell.xib */; };
 		13B8C16723C6477B006FB383 /* CurrencyRateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8C16623C6477B006FB383 /* CurrencyRateViewModel.swift */; };
+		13B8C17023C67457006FB383 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B8C16F23C67457006FB383 /* PreferencesManager.swift */; };
 		13DCD32B23C63568003B04DE /* FixerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DCD32A23C63568003B04DE /* FixerDataSource.swift */; };
 		13DCD33123C635C7003B04DE /* GetLatestRatesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DCD33023C635C7003B04DE /* GetLatestRatesRequest.swift */; };
 		4322234F454C915C82FA40F6 /* Pods_Currency_CurrencyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B5146CF5D0C12360087509 /* Pods_Currency_CurrencyUITests.framework */; };
@@ -105,6 +106,7 @@
 		13B8C16123C64563006FB383 /* CurrencyRateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRateTableViewCell.swift; sourceTree = "<group>"; };
 		13B8C16223C64563006FB383 /* CurrencyRateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrencyRateTableViewCell.xib; sourceTree = "<group>"; };
 		13B8C16623C6477B006FB383 /* CurrencyRateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRateViewModel.swift; sourceTree = "<group>"; };
+		13B8C16F23C67457006FB383 /* PreferencesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		13DCD32A23C63568003B04DE /* FixerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixerDataSource.swift; sourceTree = "<group>"; };
 		13DCD33023C635C7003B04DE /* GetLatestRatesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLatestRatesRequest.swift; sourceTree = "<group>"; };
 		141491D95E69AD55B1FF265A /* Pods-CurrencyTests.release-mock.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CurrencyTests.release-mock.xcconfig"; path = "Target Support Files/Pods-CurrencyTests/Pods-CurrencyTests.release-mock.xcconfig"; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		139A156923C53F5200DA32EB /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				13B8C16E23C6744A006FB383 /* Preferences */,
 				139A156C23C53F5200DA32EB /* Pages */,
 				139A156A23C53F5200DA32EB /* BaseViewController.swift */,
 				139A156B23C53F5200DA32EB /* BaseViewModel.swift */,
@@ -216,8 +219,8 @@
 		139A156C23C53F5200DA32EB /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				139A157C23C5404200DA32EB /* CurrencyConverter */,
 				139A157B23C5403900DA32EB /* CurrencyList */,
+				139A157C23C5404200DA32EB /* CurrencyConverter */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -343,6 +346,14 @@
 				13B8C16623C6477B006FB383 /* CurrencyRateViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		13B8C16E23C6744A006FB383 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				13B8C16F23C67457006FB383 /* PreferencesManager.swift */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		13DCD32923C63557003B04DE /* DataSources */ = {
@@ -681,6 +692,7 @@
 				13B8C15923C63BB5006FB383 /* Data.swift in Sources */,
 				139A158C23C54E4B00DA32EB /* CurrencyError.swift in Sources */,
 				139A157123C53F5300DA32EB /* BaseViewModel.swift in Sources */,
+				13B8C17023C67457006FB383 /* PreferencesManager.swift in Sources */,
 				13B8C15323C63B4E006FB383 /* FixerDataSource+Debug.swift in Sources */,
 				139A159323C551CE00DA32EB /* Repositories+Injection.swift in Sources */,
 				13B8C15F23C63EED006FB383 /* CurrencyRate+Fixer.swift in Sources */,

@@ -11,15 +11,17 @@ import RxSwift
 import RxCocoa
 
 class CurrencyListViewModel: BaseViewModel {
-    private let defaultCurrency = Currency(symbol: "USD")
+    private let defaultCurrency: Currency = Currency(symbol: PreferencesManager.currentCurrency.getValue() ?? "USD")
     
+    let supportedCurrencies = ["USD", "EUR", "BRL"]
     let baseCurrency: BehaviorRelay<Currency>
     let refresh: AnyObserver<Void>
+    let baseCurrencyIndex = BehaviorRelay<Int>(value: 0)
     
     private let disposeBag = DisposeBag()
     
     lazy var currencyList: Driver<[CurrencyRateViewModel]> = {
-        return baseCurrency.flatMapLatest { [unowned self] currency in
+        return baseCurrency.flatMap { [unowned self] currency in
             return self.loadingBound(GetCurrencyRates(baseCurrency: currency)
                 .execute()
                 .map { ratesList in
@@ -40,12 +42,33 @@ class CurrencyListViewModel: BaseViewModel {
         refreshPs.subscribe(onNext: { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.baseCurrency.accept(weakSelf.baseCurrency.value)
-        }).disposed(by: disposeBag)
+        })
+        .disposed(by: disposeBag)
+        
+        baseCurrency.map { [unowned self] currency in
+            self.saveCurrentCurrency(currency)
+            return self.indexOfBaseCurrency(symbol: currency.symbol) ?? 0
+        }
+        .bind(to: baseCurrencyIndex)
+        .disposed(by: disposeBag)
     }
     
     func buildConverterViewModel(rateViewModel: CurrencyRateViewModel) -> CurrencyConverterViewModel{
         return CurrencyConverterViewModel(fromCurrency: baseCurrency.value,
                                           toCurrency: rateViewModel.currency,
                                           rateValue: rateViewModel.rateValue)
+    }
+    
+    private func saveCurrentCurrency(_ currency: Currency) {
+        PreferencesManager.currentCurrency.setValue(value: currency.symbol)
+    }
+    
+    func indexOfBaseCurrency(symbol: String) -> Int? {
+        return supportedCurrencies.firstIndex(of: symbol)
+    }
+    
+    func setBaseCurrencyAtIndex(_ index: Int) {
+        guard index < supportedCurrencies.count else { return }
+        baseCurrency.accept(Currency(symbol: supportedCurrencies[index]))
     }
 }

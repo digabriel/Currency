@@ -38,6 +38,8 @@ enum FixerDataSource: URLRequestConvertible {
             urlRequest = try URLEncodedFormParameterEncoder().encode(requestBody, into: urlRequest)
         }
         
+        urlRequest.cachePolicy = .reloadIgnoringCacheData
+        
         return urlRequest
     }
     

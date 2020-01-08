@@ -12,6 +12,10 @@ import RxCocoa
 class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
     private let pullToRefreshView = UIRefreshControl(frame: .zero)
     
+    private lazy var currentCurrencyControl: UISegmentedControl = {
+        return UISegmentedControl(items: viewModel.supportedCurrencies)
+    }()
+    
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
             tableView.register(UINib(nibName: "CurrencyRateTableViewCell", bundle: nil),
@@ -21,12 +25,13 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
         }
     }
     
-    override init(viewModel: CurrencyListViewModel = CurrencyListViewModel()) {
-        super.init(viewModel: viewModel)
-    }
+    //MARK: - Lifecycle
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        currentCurrencyControl.sizeToFit()
+        navigationItem.titleView = currentCurrencyControl
+        view.sizeToFit()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +42,17 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
         }
     }
     
+    //MARK: - ViewModel Binding
+    
     override func bindViewModel() {
+        bindLoadingEvents()
+        bindTableViewEvents()
+        bindCurrentCurrencyEvents()
+        
+        super.bindViewModel()
+    }
+    
+    private func bindLoadingEvents() {
         viewModel.loading
             .bind(to: pullToRefreshView.rx.isRefreshing)
             .disposed(by: disposeBag)
@@ -45,7 +60,9 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
         pullToRefreshView.rx.controlEvent(.valueChanged)
             .bind(to: viewModel.refresh)
             .disposed(by: disposeBag)
-        
+    }
+    
+    private func bindTableViewEvents() {
         tableView.rx
             .modelSelected(CurrencyRateViewModel.self)
             .subscribe(onNext: { [weak self] rateVM in
@@ -60,10 +77,23 @@ class CurrencyListViewController: BaseViewController<CurrencyListViewModel> {
                 cell.bindViewModel(rateViewModel)
         }
         .disposed(by: disposeBag)
-        
-        super.bindViewModel()
     }
     
+    private func bindCurrentCurrencyEvents() {
+        viewModel.baseCurrencyIndex
+            .bind(to: currentCurrencyControl.rx.selectedSegmentIndex)
+            .disposed(by: disposeBag)
+        
+        currentCurrencyControl.addTarget(self, action: #selector(changeBaseCurrency), for: .valueChanged)
+    }
+    
+    //MARK: - Actions
+    @objc func changeBaseCurrency() {
+        let index = currentCurrencyControl.selectedSegmentIndex
+        viewModel.setBaseCurrencyAtIndex(index)
+    }
+    
+    //MARK: - Navigation
     private func navigateToConverter(rateVM: CurrencyRateViewModel) {
         let converterViewModel = viewModel.buildConverterViewModel(rateViewModel: rateVM)
         let vc = CurrencyConverterViewController(viewModel: converterViewModel)
